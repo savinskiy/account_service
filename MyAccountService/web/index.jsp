@@ -1,4 +1,5 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html">
     <%-- 
@@ -42,9 +43,9 @@
                             <td>
                                 <!-- Форма с полями: выбор операции, id, value -->
                                 <!-- Валидатор проверяет поля id, value -->
-                                <form name="account_service" action="index.jsp" method="POST" >
+                                <form name="account_service" action="index.jsp" method="POST" onsubmit="return validateForm()">
                                     <strong>Select the operation:</strong>
-                                    <!-- fieldsShowHide() - aункция, которая прячет неиспользуемые поля в зависимости от
+                                    <!-- fieldsShowHide() - функция, которая прячет неиспользуемые поля в зависимости от
                                     выбора операции. Выполняется при изменении элемента с выбором операции -->
                                     <select name="action" onchange="fieldsShowHide()">
                                         <option value="GetAmount">GetAmount</option>
@@ -57,7 +58,7 @@
                                                 <td width="100">Enter id</td>
                                                 <td>
                                                     <!-- Поле id, ввод данных ограничен регулярным выражением-->
-                                                    <input type="text" name="id" maxlength="10"  oninvalid="alert('Enter only digits from 0 to 9')" style="text-align: right"/>
+                                                    <input type="text" name="id" maxlength="10" pattern="^[0-9]*$" oninvalid="alert('Enter only digits from 0 to 9')" style="text-align: right"/>
                                                 </td>
                                             </tr>
                                             <tr id="enter_value">
@@ -97,9 +98,15 @@
                             </c:choose>  
                         </c:catch>
                         <c:if test = "${errormsg != null}">
-                          <p>There has been an exception raised in the above
-                          previous operation: ${errormsg}</p>
-                          <p>There is an exception: ${errormsg.message}</p>
+                            <c:choose>
+                                <c:when test = "${fn:startsWith(errormsg.message, 'java.lang.NumberFormatException')}">
+                                    <strong> Wrong use of the service! Use positive value in "id" field and positive
+                                        or negative value in "value" field </strong>
+                                </c:when>
+                                <c:otherwise>
+                                    <p>There is an exception: ${errormsg.message}</p>
+                                </c:otherwise>
+                            </c:choose>
                         </c:if>        
                     </h3>
                 </div>

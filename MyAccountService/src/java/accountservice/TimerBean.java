@@ -38,35 +38,34 @@ public class TimerBean extends MyServiceBean
     /* Получение данных о среднем времени запроса GetAmount */
     public long getAverageTimeForGet()
     {
+        long average_time_get = 0;
         /* Учитываем деление на ноль */
         if (CounterOfGet != 0)
-        {
             /* Делим суммарное время на количество запросов, получаем среднее время */
-            long average_time_get = summary_time_get / CounterOfGet;
-            return average_time_get;
-        }
+            average_time_get = summary_time_get / CounterOfGet;
         else
-            return 0;
+            average_time_get = 0;
+        return average_time_get;
     }
     
     /* Получение данных о среднем времени запроса AddAmount */
     public long getAverageTimeForAdd()
     {
+        long average_time_add = 0;
         /* Учитываем деление на ноль */
         if (CounterOfAdd != 0)
-        {
             /* Делим суммарное время на количество запросов, получаем среднее время */
-            long average_time_add = summary_time_add / CounterOfAdd;
-            return average_time_add;
-        }
+            average_time_add = summary_time_add / CounterOfAdd;
         else 
-            return 0;
+            average_time_add = 0;
+        return average_time_add;
     }
     
     /* Получение данных о потенциально возможном количестве запросов GetAmount
     в секунду */
     public long getNumberOfGetQueriesPerSec ()
     {
+        long NumberOfGetQueriesPerSec = 0;
         /* Учитываем деление на ноль */
         if (CounterOfGet != 0) 
         {
@@ -75,19 +74,21 @@ public class TimerBean extends MyServiceBean
             /* Переводим время в секунды:
              * 1 с = 10^9 нс = 1000 * 1000 * 1000 нс 
              * Получаем количество запросов в секунду. */
-            long NumberOfGetQueriesPerSec = 1000 * 1000 * 1000 / average_time_get;
-            return NumberOfGetQueriesPerSec;
+            if (average_time_get != 0)
+                NumberOfGetQueriesPerSec = 1000 * 1000 * 1000 / average_time_get;
+            else 
+                NumberOfGetQueriesPerSec = 0;
         } 
         else 
-        {
-            return 0;
-        }
+            NumberOfGetQueriesPerSec = 0;
+        return NumberOfGetQueriesPerSec;
     }
     
     /* Получение данных о потенциально возможном количестве запросов AddAmount
     в секунду */
     public long getNumberOfAddQueriesPerSec ()
     {
+        long NumberOfAddQueriesPerSec = 0;
         /* Учитываем деление на ноль */
         if (CounterOfAdd != 0) 
         {
@@ -96,13 +97,14 @@ public class TimerBean extends MyServiceBean
              /* Переводим время в секунды:
              * 1 с = 10^9 нс = 1000 * 1000 * 1000 нс 
              * Получаем количество запросов в секунду. */
-            long NumberOfAddQueriesPerSec = 1000 * 1000 * 1000 / average_time_add;
-            return NumberOfAddQueriesPerSec;
+            if (average_time_add != 0)
+                NumberOfAddQueriesPerSec = 1000 * 1000 * 1000 / average_time_add;
+            else
+                NumberOfAddQueriesPerSec = 0;
         }
         else 
-        {
-            return 0;
-        }
+            NumberOfAddQueriesPerSec = 0;
+        return NumberOfAddQueriesPerSec;
     }
     
      /* Получение данных о длительности последнего запроса GetAmount */

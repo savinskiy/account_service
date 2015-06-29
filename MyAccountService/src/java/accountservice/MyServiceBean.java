@@ -50,6 +50,8 @@ public class MyServiceBean implements AccountService
     @Override
     public void addAmount(Integer id, Long value) 
     {
+        if (id < 1)
+            throw new java.lang.NumberFormatException("id < 1");
         /* Получаем текущий список всех клиентов */
         clients = Clients.getClients();
         Long new_value;
@@ -77,6 +79,8 @@ public class MyServiceBean implements AccountService
     @Override
     public Long getAmount(Integer id) 
     {
+        if (id < 1)
+            throw new java.lang.NumberFormatException("id < 1");        
         /* Получаем список всех клиентов. */
         clients = Clients.getClients();
         final Long zero = 0l;

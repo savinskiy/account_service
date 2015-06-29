@@ -20,10 +20,16 @@ function validateForm()
         alert("Incorrect value of 'Id field'");
         return false;
     }
-    /* id не должно выходить за пределы Intetger в Java */
+    /* id не должно выходить за пределы Integer в Java */
     if (id > 2147483647)
     {
         alert("Value of 'Id field' misses the range");
+        return false;
+    }
+    /* id должен быть положительным */
+    if (id < 1)
+    {
+        alert("Id must be positive");
         return false;
     }
     /* В операции addAmount проверяется также значение поля value. */

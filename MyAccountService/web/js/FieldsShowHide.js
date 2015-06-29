@@ -15,7 +15,7 @@ function fieldsShowHide ()
     /* В переменную action записывается значение текущей выбранной операции 
      * getAmount или addAmount. */
     var action = document.getElementsByName("action")[0].value;
-    /* проверяется, какая операция выбрана */
+    /* проверяется, какая операция выбрана  */  
     if (action == "AddAmount")
     {
         obj_id.style.display = "block"; //Показываем элемент id
